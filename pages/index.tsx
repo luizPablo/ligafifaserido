@@ -21,7 +21,7 @@ const Home: NextPage = () => {
       </div>
 
       <footer className={styles.footer}>
-        <span>Feito com carinho  &#x2764; pelo "Dev"</span>
+        <span>Feito com carinho ♥️ pelo "Dev"</span>
       </footer>
     </div>
   )
