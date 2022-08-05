@@ -104,7 +104,7 @@ const Participants: NextPage = () => {
         </div>
       }
       <footer className={styles.footer}>
-        <span>Feito com carinho ♥️ pelo "Dev"</span>
+        <span>Feito com carinho ♥️ pelo &quot;Dev&quot;</span>
       </footer>
     </div>
   )
