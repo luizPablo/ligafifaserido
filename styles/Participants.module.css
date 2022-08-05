@@ -1,0 +1,81 @@
+.draft {
+  font-style: italic;
+  margin-top: -1.5rem;
+  margin-right: -4rem;
+  transform: rotate(-15deg);
+  z-index: 100;
+  font-size: 0.5rem;
+  background-color: #eee;
+  color: tomato;
+  border: 2px solid tomato;
+  padding: 0.1rem 0.5rem;
+  border-top-right-radius: 2rem;
+  border-bottom-right-radius: 2rem;
+  border-bottom-left-radius: 2rem;
+}
+
+.participants {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+}
+
+.participants input {
+  background-color: #444;
+  padding: 0.5rem 1rem;
+  border-radius: 0.5rem;
+  border: none;
+  color: #eee;
+  width: 15rem;
+  height: 3rem;
+  border: 2px solid #333;
+  font-size: 1rem;
+  transition: all ease-in 0.2s;
+}
+
+.participants button {
+  background-color: #444;
+  padding: 0.5rem 1rem;
+  border-radius: 0.5rem;
+  border: none;
+  color: #eee;
+  height: 3rem;
+  border: 2px solid #333;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: all ease-in 0.2s;
+}
+
+.participants button:hover {
+  background-color: greenyellow;
+  color: #333;
+  border: 2px solid greenyellow;
+}
+
+.participants input:focus {
+  border: 2px solid greenyellow;
+  outline: none;
+}
+
+.addparticipant {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+  padding: 2rem;
+}
+
+.name {
+  margin: 0;
+  font-style: italic;
+  font-size: 1.5rem;
+}
+
+.draw {
+  margin-top: 2rem;
+  font-size: 0.8rem!important;
+  font-weight: bolder!important;
+  width: 18rem;
+}
