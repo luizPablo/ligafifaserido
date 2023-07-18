@@ -161,7 +161,7 @@ const Participants: NextPage = () => {
       }
 
       {drawing &&
-        <div className={participantsStyles.participants}>
+        <div className={participantsStyles.result}>
           <h3>Aqui está a sequência sorteada!</h3>
 
           <span>- Limite de escolhas: 5</span>
