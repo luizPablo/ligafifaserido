@@ -81,7 +81,6 @@ const Participants: NextPage = () => {
   };
 
   function saveParticipants(participants: any[]) {
-    console.log(participants);
     if (isClient) {
       localStorage.setItem('participants', JSON.stringify(participants));
     }
