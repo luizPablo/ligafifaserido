@@ -2,37 +2,69 @@ import type { NextPage } from 'next'
 import Head from 'next/head'
 import Image from 'next/image'
 import Link from 'next/link'
-import { useRef, useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import styles from '../styles/Home.module.css'
 import participantsStyles from '../styles/Participants.module.css'
+import { DragDropContext, Droppable, Draggable } from 'react-beautiful-dnd';
 
 const Participants: NextPage = () => {
   const inputNameRef = useRef<HTMLInputElement>(null);
 
-  const [participants, setParticipants] = useState<string[]>([]);
+  const [participants, setParticipants] = useState<any[]>([]);
   const [sequence, setSequence] = useState<string[]>([]);
   const [currentName, setCurrentName] = useState<string>("");
 
   const [drawing, setDrawing] = useState(false);
+  const [isClient, setIsClient] = useState(false);
+
+  useEffect(() => {
+    setIsClient(true);
+    setParticipants(loadParticipants());
+  }, []);
 
   const addParticipant = () => {
     if (currentName) {
       const currentParticipants = participants;
-      currentParticipants.push(currentName);
+
+      currentParticipants.push({ name: currentName });
       setParticipants(currentParticipants);
+      saveParticipants(currentParticipants);
       setCurrentName("");
       inputNameRef.current?.focus();
     }
   }
 
+  function removeParticipant(index: number) {
+    setParticipants(prevParticipants => {
+      const newParticipants = [...prevParticipants];
+      newParticipants.splice(index, 1);
+      saveParticipants(newParticipants);
+      return newParticipants;
+    });
+  }
+
+  const onDragEnd = (result: any) => {
+    if (!result.destination) {
+      return;
+    }
+
+    const { source, destination } = result;
+    const updatedParticipants = Array.from(participants);
+    const [movedParticipant] = updatedParticipants.splice(source.index, 1);
+    updatedParticipants.splice(destination.index, 0, movedParticipant);
+
+    setParticipants(updatedParticipants);
+    saveParticipants(updatedParticipants);
+  };
+
   const makeDraw = () => {
     setDrawing(true);
     let pot: string[] = [];
-    const sortedSequence: string[] = [];
+    const sortedSequence: any[] = [];
 
-    participants.map((name, index) => {
+    participants.map((participant, index) => {
       for (let i = -1; i < index; i++) {
-        pot.push(name);
+        pot.push(participant.name);
       }
     });
 
@@ -48,6 +80,22 @@ const Participants: NextPage = () => {
     setSequence(sortedSequence);
   };
 
+  function saveParticipants(participants: any[]) {
+    console.log(participants);
+    if (isClient) {
+      localStorage.setItem('participants', JSON.stringify(participants));
+    }
+  }
+
+  function loadParticipants() {
+    const participants = localStorage.getItem('participants');
+    if (participants) {
+      return JSON.parse(participants);
+    }
+
+    return [];
+  }
+
   return (
     <div className={styles.container}>
       <Head>
@@ -58,7 +106,7 @@ const Participants: NextPage = () => {
 
       <div className={styles.logocontainer}>
         <Link href={'/'}>
-          <Image src="/images/lfslogo.jpeg" alt="LFS Logo" width={100} height={100} className={styles.logo} />
+          <Image src="/images/lfeafclogo.png" alt="LFS Logo" width={100} height={100} className={styles.logo} />
         </Link>
         <h1 className={participantsStyles.draft}>#DRAFT</h1>
       </div>
@@ -67,17 +115,34 @@ const Participants: NextPage = () => {
         <div className={participantsStyles.participants}>
           <h3>Quem vai participar do #draft? Adicione os participantes em ordem crescente de peso.</h3>
           <div className={participantsStyles.addparticipant}>
-            <input ref={inputNameRef} value={currentName} onChange={e => setCurrentName(e.target.value)} type="text" placeholder="Nome" />
+            <input ref={inputNameRef} value={currentName} onChange={e => setCurrentName(e.target.value.toUpperCase())} type="text" placeholder="Nome" />
             <button onClick={addParticipant}>+</button>
           </div>
 
-          <div>
-            {
-              participants.map((name, index) => {
-                return <p key={index} className={participantsStyles.name}>{index < 9 ? `0${index + 1}` : `${index + 1}`}. {name}</p>
-              })
+          <DragDropContext onDragEnd={onDragEnd}>
+            {isClient &&
+              <Droppable droppableId="participants-drop">
+                {(provided) => (
+                  <div ref={provided.innerRef} {...provided.droppableProps}>
+                    {participants.map((participant, index) => (
+                      <Draggable key={index} draggableId={index.toString()} index={index}>
+                        {(provided) => (
+                          <div ref={provided.innerRef} {...provided.draggableProps} {...provided.dragHandleProps}>
+                            <div className={participantsStyles.participantItem}>
+                              <span className={participantsStyles.participantItemDrag}>=</span>
+                              <p className="name">{index < 9 ? `0${index + 1}` : `${index + 1}`}. {participant.name}</p>
+                              <button onClick={() => removeParticipant(index)} className={participantsStyles.participantItemButton}>×</button>
+                            </div>
+                          </div>
+                        )}
+                      </Draggable>
+                    ))}
+                    {provided.placeholder}
+                  </div>
+                )}
+              </Droppable>
             }
-          </div>
+          </DragDropContext>
 
           {participants.length > 0 && <button onClick={makeDraw} className={participantsStyles.draw}>REALIZAR SORTEIO</button>}
         </div>
@@ -93,7 +158,7 @@ const Participants: NextPage = () => {
           <span>- 30 minutos para cada time</span>
 
           <br />
-          
+
           <div>
             {
               sequence.map((name, index) => {

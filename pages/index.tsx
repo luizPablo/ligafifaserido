@@ -15,7 +15,7 @@ const Home: NextPage = () => {
 
       <div className={styles.logocontainer}>
         <Link href={'/participants'}>
-          <Image src="/images/lfslogo.jpeg" alt="LFS Logo" width={300} height={300} className={styles.logo} />
+          <Image src="/images/lfeafclogo.png" alt="LFS Logo" width={300} height={300} className={styles.logo} />
         </Link>
         <h1 className={styles.draft}>#DRAFT</h1>
       </div>

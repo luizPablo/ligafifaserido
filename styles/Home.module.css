@@ -1,7 +1,7 @@
 .container {
   align-items: center;
   padding: 2rem;
-  background-color: #333;
+  background-color: #30333B;
 }
 
 .logo {
@@ -15,22 +15,18 @@
   flex: 1;
   justify-content: center;
   align-items: center;
-  padding: 4rem;
+  padding-top: 4rem;
 }
 
 .draft {
   font-style: italic;
-  margin-top: -3rem;
-  margin-right: -8rem;
-  transform: rotate(-15deg);
   z-index: 100;
-  font-size: 2rem;
-  background-color: #eee;
-  color: tomato;
-  border: 5px solid tomato;
-  padding: 0.2rem 1rem;
+  font-size: 1rem;
+  background-color: #393c45;
+  color: #07f468;
+  border: 2px solid #07f468;
+  padding: 0.6rem 1.8rem;
   border-top-right-radius: 2rem;
-  border-bottom-right-radius: 2rem;
   border-bottom-left-radius: 2rem;
 }
 
@@ -39,7 +35,7 @@
   flex: 1;
   padding: 2rem 0;
   margin-top: 2rem;
-  border-top: 1px solid #444;
+  border-top: 1px solid #393c45;
   justify-content: center;
   align-items: center;
 }
