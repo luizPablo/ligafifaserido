@@ -95,6 +95,12 @@ const Participants: NextPage = () => {
     return [];
   }
 
+  const handleKeyDown = (event: React.KeyboardEvent<HTMLInputElement>) => {
+    if (event.key === 'Enter') {
+      addParticipant();
+    }
+  }
+
   return (
     <div className={styles.container}>
       <Head>
@@ -114,7 +120,14 @@ const Participants: NextPage = () => {
         <div className={participantsStyles.participants}>
           <h3>Quem vai participar do #draft? Adicione os participantes em ordem crescente de peso.</h3>
           <div className={participantsStyles.addparticipant}>
-            <input ref={inputNameRef} value={currentName} onChange={e => setCurrentName(e.target.value.toUpperCase())} type="text" placeholder="Nome" />
+            <input
+              ref={inputNameRef}
+              value={currentName}
+              onChange={e => setCurrentName(e.target.value.toUpperCase())}
+              type="text"
+              placeholder="Nome"
+              onKeyDown={handleKeyDown}
+            />
             <button onClick={addParticipant}>+</button>
           </div>
 
