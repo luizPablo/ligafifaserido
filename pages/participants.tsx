@@ -16,6 +16,7 @@ const Participants: NextPage = () => {
 
   const [drawing, setDrawing] = useState(false);
   const [isClient, setIsClient] = useState(false);
+  const [randomDraw, setRandomDraw] = useState(false);
 
   useEffect(() => {
     setIsClient(true);
@@ -63,8 +64,12 @@ const Participants: NextPage = () => {
     const sortedSequence: any[] = [];
 
     participants.map((participant, index) => {
-      for (let i = -1; i < index; i++) {
+      if (randomDraw) {
         pot.push(participant.name);
+      } else {
+        for (let i = 0; i < ((index + 1) * 2); i++) {
+          pot.push(participant.name);
+        }
       }
     });
 
@@ -116,9 +121,22 @@ const Participants: NextPage = () => {
         <h1 className={participantsStyles.draft}>#DRAFT</h1>
       </div>
 
+      <div className={participantsStyles.customCheckbox}>
+        <input
+          type="checkbox"
+          id="random-draw"
+          name="random-draw"
+          checked={randomDraw}
+          onChange={() => setRandomDraw(!randomDraw)}
+        />
+
+        <label htmlFor="random-draw">Sorteio aleatório</label>
+      </div>
+
       {!drawing &&
         <div className={participantsStyles.participants}>
-          <h3>Quem vai participar do #draft? Adicione os participantes em ordem crescente de peso.</h3>
+          {!randomDraw && <h3>Quem vai participar do #draft? Adicione os participantes em ordem crescente de peso.</h3>}
+          {randomDraw && <h3>Quem vai participar do #draft? Adicione os participantes. O sorteio será realizado aleatoriamente.</h3>}
           <div className={participantsStyles.addparticipant}>
             <input
               ref={inputNameRef}
@@ -164,11 +182,6 @@ const Participants: NextPage = () => {
         <div className={participantsStyles.result}>
           <h3>Aqui está a sequência sorteada!</h3>
 
-          <span>- Limite de escolhas: 5</span>
-          <span>- Colocar Nome e Sobrenome abaixo do nome do clube <strong>(em negrito)</strong></span>
-          <span>- Mencionar o próximo coleguinha após a escolha</span>
-          <span>- 30 minutos para cada time</span>
-
           <br />
 
           <div>
@@ -180,6 +193,7 @@ const Participants: NextPage = () => {
           </div>
         </div>
       }
+
       <footer className={styles.footer}>
         <span>Feito com carinho ♥️ pelo &quot;Dev&quot;</span>
       </footer>

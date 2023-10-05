@@ -15,6 +15,7 @@
   flex-direction: column;
   justify-content: center;
   align-items: center;
+  margin-top: 3rem;
 }
 
 .result {
@@ -120,4 +121,44 @@
   font-size: 0.8rem !important;
   font-weight: bolder !important;
   width: 18rem;
+}
+
+.optionsContainer {
+  padding-top: 1.5rem;
+}
+
+.customCheckbox {
+  margin-top: 1rem;
+  display: grid;
+  grid-template-columns: 1em auto;
+  gap: 0.5em;
+}
+
+.customCheckbox input[type="checkbox"] {
+  -webkit-appearance: none;
+  appearance: none;
+  margin: 0;
+  font: inherit;
+  color: currentColor;
+  width: 1.15em;
+  height: 1.15em;
+  border: 0.15em solid currentColor;
+  border-radius: 0.15em;
+  transform: translateY(-0.075em);
+  display: grid;
+  place-content: center;
+  cursor: pointer;
+}
+
+.customCheckbox input[type="checkbox"]::before {
+  content: "";
+  width: 0.65em;
+  height: 0.65em;
+  transform: scale(0);
+  transition: 120ms transform ease-in-out;
+  box-shadow: inset 1em 1em #07f468;
+}
+
+.customCheckbox input[type="checkbox"]:checked::before {
+  transform: scale(1);
 }
