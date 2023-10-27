@@ -18,6 +18,8 @@ const Participants: NextPage = () => {
   const [isClient, setIsClient] = useState(false);
   const [randomDraw, setRandomDraw] = useState(false);
 
+  const [isCopied, setIsCopied] = useState(false);
+
   useEffect(() => {
     setIsClient(true);
     setParticipants(loadParticipants());
@@ -106,6 +108,25 @@ const Participants: NextPage = () => {
     }
   }
 
+  const capitalize = (s: string) => {
+    const words = s.split(" ");
+
+    return words.map((word) => {
+      if (word.length <= 2) {
+        return word.toLowerCase();
+      }
+
+      return word[0].toUpperCase() + word.substring(1);
+    }).join(" ");
+  };
+
+  const copyDraftCommand = () => {
+    const draftCommand = `!iniciar-draft\n\n${sequence.map((team) => capitalize(team.toLocaleLowerCase()).trim()).join('\n')}`;
+    navigator.clipboard.writeText(draftCommand);
+    setIsCopied(true);
+    setTimeout(() => setIsCopied(false), 2000);
+  };
+
   return (
     <div className={styles.container}>
       <Head>
@@ -191,6 +212,24 @@ const Participants: NextPage = () => {
               })
             }
           </div>
+
+          <br />
+          <br />
+
+          <div className={participantsStyles.copyCommandContainer}>
+            <button
+              onClick={copyDraftCommand}
+              className={participantsStyles.copyButton}
+            >
+              INICIAR DRAFT
+            </button>
+
+            <br />
+
+            {isCopied && <small className={participantsStyles.copied}>Copiado!</small>}
+            {!isCopied && <small className={participantsStyles.copied}>Clique para copiar o comando</small>}
+          </div>
+
         </div>
       }
 

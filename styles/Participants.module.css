@@ -162,3 +162,33 @@
 .customCheckbox input[type="checkbox"]:checked::before {
   transform: scale(1);
 }
+
+.copyCommandContainer {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  margin-top: 3rem;
+  width: 100%;
+}
+
+.copyButton {
+  background-color: #393c45;
+  padding: 0.5rem 1rem;
+  border-radius: 0.5rem;
+  border: none;
+  color: #eee;
+  height: 3rem;
+  border: 2px solid #333;
+  font-size: 0.8rem;
+  font-weight: bolder;
+  cursor: pointer;
+  transition: all ease-in 0.2s;
+  width: 100%;
+}
+
+.copyButton:hover {
+  background-color: #07f468;
+  color: #333;
+  border: 2px solid #07f468;
+}
