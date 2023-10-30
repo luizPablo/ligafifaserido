@@ -108,12 +108,28 @@ const Participants: NextPage = () => {
     }
   }
 
+  const hyphenCase = (s: string) => {
+    const words = s.split("-");
+
+    return words.map((word) => {
+      return word[0].toUpperCase() + word.substring(1);
+    }).join("-");
+  };
+
   const capitalize = (s: string) => {
     const words = s.split(" ");
 
     return words.map((word) => {
       if (word.length <= 2) {
-        return word.toLowerCase();
+        if (word === "da" || word === "de" || word === "do") {
+          return word.toLocaleLowerCase();
+        }
+
+        return word.toUpperCase();
+      }
+
+      if (word.includes("-")) {
+        return hyphenCase(word);
       }
 
       return word[0].toUpperCase() + word.substring(1);
