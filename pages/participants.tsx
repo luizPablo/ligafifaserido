@@ -26,15 +26,27 @@ const Participants: NextPage = () => {
   }, []);
 
   const addParticipant = () => {
-    if (currentName) {
-      const currentParticipants = participants;
 
-      currentParticipants.push({ name: currentName });
+    const splitedTimes = splitParticipants(currentName);
+
+    if (splitedTimes.length > 0) {
+      // const currentParticipants = participants;
+
+      // currentParticipants.push({ name: currentName });
+      const currentParticipants = [...participants, ...splitedTimes];
       setParticipants(currentParticipants);
       saveParticipants(currentParticipants);
       setCurrentName("");
       inputNameRef.current?.focus();
     }
+  }
+
+  function splitParticipants(entrada: string): any[] {
+    if (!entrada) return [];
+
+    const times = entrada.split(',').map(time => time.trim());
+
+    return times.map(time => ({ name: time }));
   }
 
   function removeParticipant(index: number) {
@@ -124,8 +136,6 @@ const Participants: NextPage = () => {
         if (word === "da" || word === "de" || word === "do") {
           return word.toLocaleLowerCase();
         }
-
-        return word.toUpperCase();
       }
 
       if (word.includes("-")) {
@@ -180,7 +190,7 @@ const Participants: NextPage = () => {
               value={currentName}
               onChange={e => setCurrentName(e.target.value.toUpperCase())}
               type="text"
-              placeholder="Nome"
+              placeholder="Nome ou Lista"
               onKeyDown={handleKeyDown}
             />
             <button onClick={addParticipant}>+</button>
