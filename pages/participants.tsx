@@ -16,7 +16,7 @@ const Participants: NextPage = () => {
 
   const [drawing, setDrawing] = useState(false);
   const [isClient, setIsClient] = useState(false);
-  const [randomDraw, setRandomDraw] = useState(false);
+  const [randomDraw, setRandomDraw] = useState(true);
 
   const [isCopied, setIsCopied] = useState(false);
 
@@ -74,6 +74,7 @@ const Participants: NextPage = () => {
 
   const makeDraw = () => {
     setDrawing(true);
+
     let pot: string[] = [];
     const sortedSequence: any[] = [];
 
@@ -88,7 +89,7 @@ const Participants: NextPage = () => {
     });
 
     while (pot.length > 0) {
-      const sortedIndex = Math.floor((Math.random() * (pot.length - 1)) + 0);
+      const sortedIndex = Math.floor((Math.random() * (pot.length)) + 0);
       const sortedName = pot[sortedIndex];
 
       sortedSequence.push(sortedName);
